@@ -1,0 +1,876 @@
+openapi: 3.0.3
+info:
+  title: IIT Madras Support System API's
+  version: 1.0.0
+  description: API's used for the support system application in IIT Madras
+servers:
+  - url: http://127.0.0.1:5000
+    variables: {}
+paths:
+  /register:
+    description: for user registration
+    post:
+      summary: ''
+      description: For user registration
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: rahul
+                password:
+                  type: string
+                  example: password
+                usertype:
+                  type: string
+                  example: student
+      operationId: '1'
+      responses:
+        '201':
+          description: Success - return created user
+          content:
+            application/json:
+              examples:
+                Sample 201:
+                  value:
+                    id: 1
+                    user: rahul
+                    usertype: student
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                Sample 400:
+                  value: Bad Request
+        '500':
+          description: Internal Error
+          content:
+            application/json:
+              examples:
+                Sample 500:
+                  value: Internal Error
+  /login:
+    description: for user login
+    post:
+      summary: ''
+      description: For user login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: rahul
+                password:
+                  type: string
+                  example: password
+                usertype:
+                  type: string
+                  example: student
+      operationId: '2'
+      responses:
+        '201':
+          description: Success - logged in
+          content:
+            application/json:
+              examples:
+                Sample 201:
+                  value:
+                    id: 1
+                    user: rahul
+                    usertype: student
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                Sample 400:
+                  value: Bad Request
+        '500':
+          description: Internal Error
+          content:
+            application/json:
+              examples:
+                Sample 500:
+                  value: Internal Error
+  /logout:
+    description: for user logout
+    post:
+      summary: ''
+      description: For user logout
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                id:
+                  type: integer
+                  example: 1
+                name:
+                  type: string
+                  example: rahul
+      operationId: '3'
+      responses:
+        '201':
+          description: Success - logged out
+          content:
+            application/json:
+              examples:
+                Sample 201:
+                  value: Logged Out
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                Sample 400:
+                  value: Bad Request
+        '500':
+          description: Internal Error
+          content:
+            application/json:
+              examples:
+                Sample 500:
+                  value: Internal Error
+  /create_ticket:
+    description: for ticket creation by usertype student
+    post:
+      summary: ''
+      description: for ticket creation by usertype student
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ticket_title:
+                  type: string
+                  example: example ticket
+                ticket_query:
+                  type: string
+                  example: example query
+      operationId: '4'
+      responses:
+        '201':
+          description: Success - return created ticket
+          content:
+            application/json:
+              examples:
+                Sample 201:
+                  value:
+                    ticket_id: 1
+                    ticket_title: example ticket
+                    ticket_query: example query
+                    ticket_status: OPEN
+                    ticket_response: ""
+                    upvotes: 0
+                    user_id: 1
+                    is_faq: False
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                Sample 400:
+                  value: Bad Request
+        '500':
+          description: Internal Error
+          content:
+            application/json:
+              examples:
+                Sample 500:
+                  value: Internal Error
+  /edit_ticket/{ticket_id}:
+    description: for ticket editing by usertype student
+    get:
+      summary: ''
+      description: to get ticket details
+      parameters:
+        - name: ticket_id
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1
+      operationId: '5'
+      responses:
+        '203':
+          description: Success - return ticket
+          content:
+            application/json:
+              examples:
+                Sample 203:
+                  value: 
+                    ticket_id : 1
+                    ticket_title : example title 1
+                    ticket_query : example query 1
+                    ticket_status : OPEN
+                    ticket_response : ""
+                    upvotes : 1
+                    user_id : 1
+                    is_faq : False
+        '404':
+          description: Tickets not Found
+          content:
+            application/json:
+              examples:
+                Sample 404:
+                  value: Tickets not Found
+        '500':
+          description: Internal Error
+          content:
+            application/json:
+              examples:
+                Sample 500:
+                  value: Internal Error    
+    post:
+      summary: ''
+      description: for ticket editing by usertype student
+      parameters:
+        - name: ticket_id
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ticket_id:
+                  type: integer
+                  example: 1
+                ticket_title:
+                  type: string
+                  example: example ticket (edited)
+                ticket_query:
+                  type: string
+                  example: example query
+      operationId: '6'
+      responses:
+        '201':
+          description: Success - return edited ticket
+          content:
+            application/json:
+              examples:
+                Sample 201:
+                  value:
+                    ticket_id: 1
+                    ticket_title: example ticket (edited)
+                    ticket_query: example query
+                    ticket_status: OPEN
+                    ticket_response: ""
+                    upvotes: 0
+                    user_id: 1
+                    is_faq: False
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                Sample 400:
+                  value: Bad Request
+        '500':
+          description: Internal Error
+          content:
+            application/json:
+              examples:
+                Sample 500:
+                  value: Internal Error
+  /delete_ticket:
+    description: for ticket deletion by usertype student
+    post:
+      summary: ''
+      description: for ticket deletion by usertype student
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ticket_id:
+                  type: integer
+                  example: 1
+      operationId: '7'
+      responses:
+        '201':
+          description: Success - ticket deleted
+          content:
+            application/json:
+              examples:
+                Sample 201:
+                  value: Ticket Deleted Successfully
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                Sample 400:
+                  value: Bad Request
+        '500':
+          description: Internal Error
+          content:
+            application/json:
+              examples:
+                Sample 500:
+                  value: Internal Error
+  /upvote:
+    description: for ticket upvoting by usertype student
+    post:
+      summary: ''
+      description: for ticket upvoting by usertype student
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ticket_id:
+                  type: integer
+                  example: 1
+      operationId: '8'
+      responses:
+        '201':
+          description: Success - Upvoted
+          content:
+            application/json:
+              examples:
+                Sample 201:
+                  value:
+                    ticket_id: 1
+                    ticket_title: example ticket
+                    ticket_query: example query
+                    ticket_status: OPEN
+                    ticket_response: ""
+                    upvotes: 1
+                    user_id: 1
+                    is_faq: False
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                Sample 400:
+                  value: Bad Request
+        '500':
+          description: Internal Error
+          content:
+            application/json:
+              examples:
+                Sample 500:
+                  value: Internal Error
+  /view_my_tickets/{user_id}:
+    description: for the student to view all of his/her tickets
+    get:
+      summary: ''
+      description: for the student to view all of his/her tickets
+      parameters:
+        - name: user_id
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1
+      operationId: '9'
+      responses:
+        '203':
+          description: Success - return tickets list
+          content:
+            application/json:
+              examples:
+                Sample 203:
+                  value: 
+                    [
+                    {ticket_id : 1,
+                     ticket_title : 
+                     example title 1,
+                     ticket_query : 
+                     example query 1,
+                     ticket_status : OPEN,
+                     ticket_response: "",
+                     upvotes : 1,
+                     user_id : 1,
+                     is_faq : False
+                    },
+                    {ticket_id : 2,
+                     ticket_title : 
+                     example title 2,
+                     ticket_query : 
+                     example query 2,
+                     ticket_status : OPEN,
+                     ticket_response: "",
+                     upvotes : 2,
+                     user_id : 1,
+                     is_faq : False
+                    },
+                    ]
+        '404':
+          description: Tickets not Found
+          content:
+            application/json:
+              examples:
+                Sample 404:
+                  value: Tickets not Found
+        '500':
+          description: Internal Error
+          content:
+            application/json:
+              examples:
+                Sample 500:
+                  value: Internal Error
+  /search_ticket/{search_string}:
+    description: to search for a ticket
+    get:
+      summary: ''
+      description: to search for a ticket
+      parameters:
+        - name: search_string
+          required: true
+          in: path
+          schema:
+            type: string
+            example: example
+      operationId: '10'
+      responses:
+        '203':
+          description: Success - return tickets list
+          content:
+            application/json:
+              examples:
+                Sample 203:
+                  value: 
+                    [
+                    {ticket_id : 1,
+                     ticket_title : 
+                     example title 1,
+                     ticket_query : 
+                     example query 1,
+                     ticket_status : OPEN,
+                     ticket_response: "",
+                     upvotes : 1,
+                     user_id : 1,
+                     is_faq : False
+                    },
+                    {ticket_id : 2,
+                     ticket_title : 
+                     example title 2,
+                     ticket_query : 
+                     example query 2,
+                     ticket_status : OPEN,
+                     ticket_response: "",
+                     upvotes : 2,
+                     user_id : 1,
+                     is_faq : False
+                    },
+                    ]
+        '404':
+          description: Tickets not Found
+          content:
+            application/json:
+              examples:
+                Sample 404:
+                  value: Tickets not Found
+        '500':
+          description: Internal Error
+          content:
+            application/json:
+              examples:
+                Sample 500:
+                  value: Internal Error
+  /view_faq:
+    description: to view faq
+    get:
+      summary: ''
+      description: to view faq
+      operationId: '11'
+      responses:
+        '203':
+          description: Success - return faq list
+          content:
+            application/json:
+              examples:
+                Sample 203:
+                  value: 
+                    [
+                    {ticket_id : 1,
+                     ticket_title : 
+                     example title 1,
+                     ticket_query : 
+                     example query 1,
+                     ticket_status : CLOSED,
+                     ticket_response: example response,
+                     upvotes : 45,
+                     user_id : 1,
+                     is_faq : True
+                    },
+                    {ticket_id : 2,
+                     ticket_title : 
+                     example title 2,
+                     ticket_query : 
+                     example query 2,
+                     ticket_status : CLOSED,
+                     ticket_response: example respone 2,
+                     upvotes : 2,
+                     user_id : 1,
+                     is_faq : True
+                    },
+                    ]
+        '404':
+          description: FAQ not Found
+          content:
+            application/json:
+              examples:
+                Sample 404:
+                  value: FAQ not Found
+        '500':
+          description: Internal Error
+          content:
+            application/json:
+              examples:
+                Sample 500:
+                  value: Internal Error
+  /view_all_tickets:
+    description: for usertype staff and admin to view all open tickets
+    get:
+      summary: ''
+      description: for usertype staff and admin to view all open tickets
+      operationId: '12'
+      responses:
+        '203':
+          description: Success - return ticket list
+          content:
+            application/json:
+              examples:
+                Sample 203:
+                  value: 
+                    [
+                    {ticket_id : 1,
+                     ticket_title : 
+                     example title 1,
+                     ticket_query : 
+                     example query 1,
+                     ticket_status : OPEN,
+                     ticket_response: example response,
+                     upvotes : 65,
+                     user_id : 1,
+                     is_faq : False
+                    },
+                    {ticket_id : 2,
+                     ticket_title : 
+                     example title 2,
+                     ticket_query : 
+                     example query 2,
+                     ticket_status : OPEN,
+                     ticket_response: example respone 2,
+                     upvotes : 2,
+                     user_id : 1,
+                     is_faq : False
+                    },
+                    ]
+        '404':
+          description: No Open Tickets
+          content:
+            application/json:
+              examples:
+                Sample 404:
+                  value: No Open Tickets
+        '500':
+          description: Internal Error
+          content:
+            application/json:
+              examples:
+                Sample 500:
+                  value: Internal Error       
+  /respond_to_ticket/{ticket_id}:
+    description: for staff to respond to a tickets
+    get:
+      summary: ''
+      description: to get ticket details
+      parameters:
+        - name: ticket_id
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1
+      operationId: '13'
+      responses:
+        '203':
+          description: Success - return ticket
+          content:
+            application/json:
+              examples:
+                Sample 203:
+                  value: 
+                    ticket_id : 1
+                    ticket_title : example title 1
+                    ticket_query : example query 1
+                    ticket_status : OPEN
+                    ticket_response: ""
+                    upvotes : 1
+                    user_id : 1
+                    is_faq : False
+        '404':
+          description: Tickets not Found
+          content:
+            application/json:
+              examples:
+                Sample 404:
+                  value: Tickets not Found
+        '500':
+          description: Internal Error
+          content:
+            application/json:
+              examples:
+                Sample 500:
+                  value: Internal Error     
+    post:
+      summary: ''
+      description: for staff to respond to ticket
+      parameters:
+        - name: ticket_id
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ticket_id:
+                  type: integer
+                  example: 1
+                ticket_response:
+                  type: string
+                  example: example response 1
+                ticket_status:
+                  type: string
+                  example: CLOSED
+      operationId: '14'
+      responses:
+        '201':
+          description: Success - Responded to Ticket
+          content:
+            application/json:
+              examples:
+                Sample 201:
+                  value:
+                    ticket_id: 1
+                    ticket_title: example ticket
+                    ticket_query: example query
+                    ticket_status: CLOSED
+                    ticket_response: example response 1
+                    upvotes: 1
+                    user_id: 1
+                    is_faq: False
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                Sample 400:
+                  value: Bad Request
+        '500':
+          description: Internal Error
+          content:
+            application/json:
+              examples:
+                Sample 500:
+                  value: Internal Error              
+  /add_to_faq:
+    description: for adding to faq by usertype admin
+    post:
+      summary: ''
+      description: for adding to faq by usertype admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ticket_id:
+                  type: integer
+                  example: 1
+      operationId: '15'
+      responses:
+        '201':
+          description: Success - Added to FAQ
+          content:
+            application/json:
+              examples:
+                Sample 201:
+                  value:
+                    ticket_id: 1
+                    ticket_title: example ticket
+                    ticket_query: example query
+                    ticket_status: CLOSED
+                    ticket_response: example response
+                    upvotes: 1
+                    user_id: 1
+                    is_faq: True
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                Sample 400:
+                  value: Bad Request
+        '500':
+          description: Internal Error
+          content:
+            application/json:
+              examples:
+                Sample 500:
+                  value: Internal Error              
+  /delete_from_faq:
+    description: for deleting from faq by usertype admin
+    post:
+      summary: ''
+      description: for deleting from faq by usertype admin
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ticket_id:
+                  type: integer
+                  example: 1
+      operationId: '16'
+      responses:
+        '201':
+          description: Success - Deleted from FAQ
+          content:
+            application/json:
+              examples:
+                Sample 201:
+                  value: Deleted from FAQ
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                Sample 400:
+                  value: Bad Request
+        '500':
+          description: Internal Error
+          content:
+            application/json:
+              examples:
+                Sample 500:
+                  value: Internal Error 
+  /edit_faq/{ticket_id}:
+    description: for faq editing by usertype admin
+    get:
+      summary: ''
+      description: to get faq details
+      parameters:
+        - name: ticket_id
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1
+      operationId: '17'
+      responses:
+        '203':
+          description: Success - return FAQ
+          content:
+            application/json:
+              examples:
+                Sample 203:
+                  value: 
+                    ticket_id : 1
+                    ticket_title : example title 1
+                    ticket_query : example query 1
+                    ticket_status : CLOSED
+                    ticket_response : example response 1
+                    upvotes : 1
+                    user_id : 1
+                    is_faq : True
+        '404':
+          description: FAQ not Found
+          content:
+            application/json:
+              examples:
+                Sample 404:
+                  value: FAQ not Found
+        '500':
+          description: Internal Error
+          content:
+            application/json:
+              examples:
+                Sample 500:
+                  value: Internal Error    
+    post:
+      summary: ''
+      description: for faq editing by usertype admin
+      parameters:
+        - name: ticket_id
+          required: true
+          in: path
+          schema:
+            type: integer
+            example: 1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                ticket_id:
+                  type: integer
+                  example: 1
+                ticket_title:
+                  type: string
+                  example: example ticket (edited)
+                ticket_query:
+                  type: string
+                  example: example query
+                ticket_response: 
+                  type: string
+                  example: example response (edited)
+      operationId: '18'
+      responses:
+        '201':
+          description: Success - return edited ticket
+          content:
+            application/json:
+              examples:
+                Sample 201:
+                  value:
+                    ticket_id: 1
+                    ticket_title: example ticket (edited)
+                    ticket_query: example query
+                    ticket_status: CLOSED
+                    ticket_response: example response (edited)
+                    upvotes: 0
+                    user_id: 1
+                    is_faq: True
+        '400':
+          description: Bad Request
+          content:
+            application/json:
+              examples:
+                Sample 400:
+                  value: Bad Request
+        '500':
+          description: Internal Error
+          content:
+            application/json:
+              examples:
+                Sample 500:
+                  value: Internal Error     
+                  
